@@ -7,8 +7,16 @@ GROUP BY gender;
 SELECT customer_id, purchase_amount FROM customer
 WHERE discount_applied = 'yes' AND purchase_amount >= (SELECT AVG(purchase_amount) FROM customer);
 -- Q3. Which are the top 5 products with the highest average review rating?
-SELECT * FROM customer LIMIT 5;
 SELECT item_purchased, ROUND(AVG(review_rating), 2) FROM customer
 GROUP BY item_purchased
-order by AVG(review_rating) DESC
-LIMIT 5; 
+ORDER BY AVG(review_rating) DESC
+LIMIT 5;
+-- Q4. Compare the average Purchase Amounts between Stardard and Express Shipping
+SELECT AVG(purchase_amount), shipping_type FROM customer
+WHERE shipping_type IN("Express", "Standard")
+GROUP BY shipping_type;
+-- Q5. Do subscribed customers spend more? Compare average spend total revenue between subscribers and non-subscribers.
+SELECT COUNT(customer_id) AS No_Customers, SUM(purchase_amount), AVG(purchase_amount), subscription_status FROM customer
+GROUP BY subscription_status;
+-- Q6. Which 5 products have the highest percentage of purchases with discount applied?
+SELECT * FROM customer LIMIT 5;
